@@ -7,7 +7,7 @@
 #include <QObject>
 #include <QtPlugin>
 #include <PlotJuggler/dataloader_base.h>
-#include "ros-type-parser.h"
+#include <ros_type_introspection/ros_type_introspection.hpp>
 
 class  DataLoadROS: public QObject, DataLoader
 {

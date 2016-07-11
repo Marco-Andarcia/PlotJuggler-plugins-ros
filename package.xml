@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package>
+  <name>plotjuggler_ros_plugins</name>
+  <version>0.1.0</version>
+  <description>A set of plugins for PlotJuggler</description>
+
+  <maintainer email="faconti@icarustechnology.com">Davide Faconti</maintainer>
+  <license>LGPLv3</license>
+
+
+  <!-- Url tags are optional, but mutiple are allowed, one per tag -->
+  <!-- Optional attribute type can be: website, bugtracker, or repository -->
+  <!-- Example: -->
+  <!-- <url type="website">http://wiki.ros.org/plotjuggler-ros-plugins</url> -->
+
+  <author email="faconti@icarustechnology.com">Davide Faconti</author> 
+
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <build_depend>ros_type_introspection</build_depend>
+  <run_depend>ros_type_introspection</run_depend>
+
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+</package>

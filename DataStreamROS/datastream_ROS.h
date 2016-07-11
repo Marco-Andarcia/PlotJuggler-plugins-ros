@@ -4,9 +4,9 @@
 #include <QtPlugin>
 #include <thread>
 #include <topic_tools/shape_shifter.h>
-#include <ros-type-parser.h>
 #include <PlotJuggler/datastreamer_base.h>
-#include "../ruleloaderwidget.h"
+#include "ruleloaderwidget.h"
+#include <ros_type_introspection/ros_type_introspection.hpp>
 
 class  DataStreamROS: public QObject, DataStreamer
 {

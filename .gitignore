@@ -30,4 +30,4 @@
 
 # Directories
 build*
-
+/CMakeLists.txt.user

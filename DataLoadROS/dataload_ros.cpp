@@ -6,8 +6,8 @@
 #include <QDebug>
 #include <QApplication>
 #include <QProgressDialog>
-#include "rosbag/view.h"
-#include "ros-type-parser.h"
+#include <rosbag/view.h>
+
 
 DataLoadROS::DataLoadROS()
 {
@@ -42,12 +42,12 @@ PlotDataMap DataLoadROS::readDataFromFile(const std::string& file_name,
     for(int i=0;  i<  connections.size(); i++)
     {
         all_topic_names.push_back( QString( connections[i]->topic.c_str() ) );
-        parseRosTypeDescription( connections[i]->datatype,
+        
+        buildRosTypeMapFromDefinition( connections[i]->datatype,
                                  connections[i]->msg_def,
                                  &type_map);
     }
 
-    printRosTypeMap  (type_map );
 
     int count = 0;
 
@@ -84,13 +84,6 @@ PlotDataMap DataLoadROS::readDataFromFile(const std::string& file_name,
         }
     }
 
-    std::vector<SubstitutionRule> rules;
-    rules.push_back( SubstitutionRule("/data.vectors[#].value",      "/data.vectors[#].name",   "#"));
-    rules.push_back( SubstitutionRule("/data.doubles[#].value",      "/data.doubles[#].name",   "#"));
-    rules.push_back( SubstitutionRule("/data.vectors3d[#].value[0]", "/data.vectors3d[#].name", "#.x"));
-    rules.push_back( SubstitutionRule("/data.vectors3d[#].value[1]", "/data.vectors3d[#].name", "#.y"));
-    rules.push_back( SubstitutionRule("/data.vectors3d[#].value[2]", "/data.vectors3d[#].name", "#.z"));
-
     QProgressDialog progress_dialog;
     progress_dialog.setLabelText("Loading... please wait");
     progress_dialog.setWindowModality( Qt::ApplicationModal );
@@ -126,7 +119,7 @@ PlotDataMap DataLoadROS::readDataFromFile(const std::string& file_name,
         String datatype( msg.getDataType().data(), msg.getDataType().size() );
         String topic_name( msg.getTopic().data(), msg.getTopic().size() );
 
-        buildRosFlatType(type_map, datatype, topic_name, &buffer_ptr,  &flat_container);
+        flat_container = buildRosFlatType(type_map, datatype, topic_name, &buffer_ptr);
         applyNameTransform( _rules, &flat_container );
 
         for(auto& it: flat_container.value_renamed )

@@ -13,6 +13,7 @@
 #include <ros/callback_queue.h>
 #include <QApplication>
 
+
 DataStreamROS::DataStreamROS()
 {
     _enabled = false;
@@ -40,7 +41,7 @@ void DataStreamROS::topicCallback(const topic_tools::ShapeShifter::ConstPtr& msg
     if( registered_type.find( data_type ) == registered_type.end() )
     {
         registered_type.insert( data_type );
-        parseRosTypeDescription( data_type,
+        buildRosTypeMapFromDefinition( data_type,
                                  msg->getMessageDefinition(),
                                  &_ros_type_map);
     }
@@ -60,7 +61,7 @@ void DataStreamROS::topicCallback(const topic_tools::ShapeShifter::ConstPtr& msg
     String topicname( topic_name.data(), topic_name.length() );
 
 
-    buildRosFlatType( _ros_type_map, datatype, topicname, &buffer_ptr,  &flat_container);
+    flat_container = buildRosFlatType( _ros_type_map, datatype, topicname, &buffer_ptr);
     applyNameTransform( _rules, &flat_container );
 
     // qDebug() << " pushing " << msg_time;
