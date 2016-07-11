@@ -10,6 +10,8 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   roscpp_serialization
   ros_type_introspection
+  rostime
+  topic_tools
 )
 
 
@@ -32,9 +34,6 @@ include_directories(
     ${Qt5Widgets_INCLUDE_DIRS}
     ${catkin_INCLUDE_DIRS}
     )
-    
-message(    "INCLUUUUDE" )
-message(     "${catkin_INCLUDE_DIRS}" )
 
 ###################################
 ## catkin specific configuration ##
@@ -100,10 +99,20 @@ QT5_WRAP_UI ( DATASTREAM_UI_SRC
 
 ## Declare a C++ library
 add_library( DataLoadROS SHARED ${DATALOAD_SRC} ${DATALOAD_UI_SRC} )
-add_dependencies(DataLoadROS ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries( DataLoadROS  ${catkin_LIBRARIES} )
+
+add_dependencies(DataLoadROS 
+	${${PROJECT_NAME}_EXPORTED_TARGETS} 
+	${catkin_EXPORTED_TARGETS}
+	)
 
 add_library( DataStreamROS SHARED ${DATASTREAM_SRC} ${DATASTREAM_UI_SRC} )
-add_dependencies(DataStreamROS ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries( DataStreamROS  ${catkin_LIBRARIES} )
+
+add_dependencies(DataStreamROS 
+	${${PROJECT_NAME}_EXPORTED_TARGETS} 
+	${catkin_EXPORTED_TARGETS}
+	)
 
 
 #############
